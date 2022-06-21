@@ -7,6 +7,8 @@ public interface LoginService {
 
     ResResult<UserDto> login(String key, String password);
 
-    ResResult<Object> logout(String token);
+    ResResult<Object> logout();
+
+    ResResult<Object> registry(UserDto userInfo);
 
 }

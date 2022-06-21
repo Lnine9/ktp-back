@@ -20,9 +20,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class UserCourse implements Serializable {
 
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
-
     private String courseId;
 
     private String userId;
@@ -31,6 +28,5 @@ public class UserCourse implements Serializable {
      * 0 学生 1 教师 2助教
      */
     private Integer userRole;
-
 
 }

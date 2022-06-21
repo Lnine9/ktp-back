@@ -4,6 +4,10 @@ spring:
     username: root
     password: l20020204
     driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    port: 6379
+    host: localhost
+    password: Abc785342
 
 server:
   servlet:

@@ -20,10 +20,12 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class User implements Serializable {
 
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    @TableId(value = "id", type = IdType.INPUT)
     private String id;
 
     private String email;
+
+    private String phone;
 
     private String username;
 

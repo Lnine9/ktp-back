@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
  * @since 2022-06-20
  */
 @Controller
-@RequestMapping("/task")
+@RequestMapping("/api/task")
 public class TaskController {
 
 }

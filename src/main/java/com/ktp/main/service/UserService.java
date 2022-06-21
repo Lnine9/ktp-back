@@ -1,7 +1,9 @@
 package com.ktp.main.service;
 
+import com.ktp.main.dto.UserDto;
 import com.ktp.main.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ktp.main.util.ResResult;
 
 /**
  * <p>
@@ -12,5 +14,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-06-20
  */
 public interface UserService extends IService<User> {
-    User findUserByEmailOrAccount(String key);
+    User findUserByEmailOrPhone(String key);
+
+    boolean queryExists(UserDto userInfo);
+
+    ResResult<UserDto> updateUser(UserDto userInfo);
 }
