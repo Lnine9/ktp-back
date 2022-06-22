@@ -87,16 +87,12 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Override
     public ResResult<CourseDto> getCourseById(String courseId) {
-        try {
-            Course course = getById(courseId);
-            if (course == null){
-                return ResResult.fail("课程不存在");
-            }
-            CourseDto res = modelMapper.map(course, CourseDto.class);
-            return ResResult.ok(res);
-        } catch (RuntimeException e){
-            return ResResult.fail("查询失败");
+        Course course = getById(courseId);
+        if (course == null){
+            return ResResult.fail("课程不存在");
         }
+        CourseDto res = modelMapper.map(course, CourseDto.class);
+        return ResResult.ok(res);
     }
 
     @Override

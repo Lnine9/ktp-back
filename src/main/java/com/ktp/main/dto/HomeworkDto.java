@@ -2,6 +2,7 @@ package com.ktp.main.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Accessors(chain = true)

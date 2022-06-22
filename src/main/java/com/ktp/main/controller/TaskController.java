@@ -5,13 +5,12 @@ import com.ktp.main.dto.TaskDto;
 import com.ktp.main.service.TaskService;
 import com.ktp.main.util.ResResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <p>
@@ -21,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author ${author}
  * @since 2022-06-20
  */
-@Controller
+@RestController
 @RequestMapping("/api/task")
 public class TaskController {
 
@@ -31,6 +30,11 @@ public class TaskController {
     @PostMapping
     public ResResult<TaskDto> createTask(TaskDto taskInfo){
         return taskService.createTask(taskInfo);
+    }
+
+    @GetMapping
+    public ResResult<List<TaskDto>> getTasks(String courseId){
+        return taskService.getTasks(courseId);
     }
 
 }

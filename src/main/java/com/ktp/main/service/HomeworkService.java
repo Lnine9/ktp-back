@@ -1,7 +1,10 @@
 package com.ktp.main.service;
 
+import com.ktp.main.dto.HomeworkDto;
 import com.ktp.main.entity.Homework;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ktp.main.util.ResResult;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface HomeworkService extends IService<Homework> {
 
+    ResResult<HomeworkDto> submitHomework(HomeworkDto homeworkInfo);
 }

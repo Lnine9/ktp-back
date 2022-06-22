@@ -5,6 +5,8 @@ import com.ktp.main.entity.Task;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ktp.main.util.ResResult;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -16,4 +18,6 @@ import com.ktp.main.util.ResResult;
 public interface TaskService extends IService<Task> {
 
     ResResult<TaskDto> createTask(TaskDto taskInfo);
+
+    ResResult<List<TaskDto>> getTasks(String courseId);
 }

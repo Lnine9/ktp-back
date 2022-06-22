@@ -70,12 +70,8 @@ public class UserCourseServiceImpl extends ServiceImpl<UserCourseMapper, UserCou
 
     @Override
     public ResResult<List<CourseDto>> getCourses(String userId){
-        try {
-            List<Course> courses = baseMapper.getCoursesByUserId(userId);
-            List<CourseDto> res = modelMapper.map(courses, new TypeToken<List<CourseDto>>(){}.getType());
-            return ResResult.ok(res);
-        } catch (RuntimeException e){
-            return ResResult.fail("查询失败");
-        }
+        List<Course> courses = baseMapper.getCoursesByUserId(userId);
+        List<CourseDto> res = modelMapper.map(courses, new TypeToken<List<CourseDto>>(){}.getType());
+        return ResResult.ok(res);
     }
 }
