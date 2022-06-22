@@ -38,6 +38,8 @@ public class LoginServiceImpl implements LoginService {
         if (user == null){
             return ResResult.fail("用户不存在");
         }
+        log.info(user.toString());
+        log.info(password);
         if (user.getPassword().equals(password)){
             UserDto respUser = modelMapper.map(user, UserDto.class);
             respUser.setPassword(null);

@@ -1,7 +1,9 @@
 package com.ktp.main.service;
 
+import com.ktp.main.dto.TaskDto;
 import com.ktp.main.entity.Task;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ktp.main.util.ResResult;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface TaskService extends IService<Task> {
 
+    ResResult<TaskDto> createTask(TaskDto taskInfo);
 }
