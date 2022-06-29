@@ -21,4 +21,5 @@ public interface CourseService extends IService<Course> {
     ResResult<CourseDto> getCourseById(String courseId);
 
     ResResult<CourseDto> updateCourse(CourseDto courseInfo);
+
 }

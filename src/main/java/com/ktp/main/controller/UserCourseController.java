@@ -7,8 +7,6 @@ import com.ktp.main.util.ResResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.stereotype.Controller;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -42,6 +40,24 @@ public class UserCourseController {
     @GetMapping
     public ResResult<List<CourseDto>> getCourses(@RequestParam String userId){
         return userCourseService.getCourses(userId);
+    }
+
+    @PutMapping("/field")
+    public ResResult<Object> fieldCourse(@RequestBody String courseId, HttpServletRequest req){
+        String userId = (String) req.getAttribute("userId");
+        return userCourseService.fieldCourse(courseId, userId);
+    }
+
+    @PutMapping("/fieldAll")
+    public ResResult<Object> fieldAllCourse(@RequestBody String courseId, HttpServletRequest req){
+        String userId = (String) req.getAttribute("userId");
+        return userCourseService.fieldAllCourse(courseId, userId);
+    }
+
+    @PutMapping("/unField")
+    public ResResult<Object> unFieldCourse(@RequestBody String courseId, HttpServletRequest req){
+        String userId = (String) req.getAttribute("userId");
+        return userCourseService.fieldCourse(courseId, userId);
     }
 
 }

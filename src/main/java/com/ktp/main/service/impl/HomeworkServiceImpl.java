@@ -1,7 +1,9 @@
 package com.ktp.main.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.ktp.main.dto.HomeworkDto;
 import com.ktp.main.entity.Homework;
+import com.ktp.main.entity.Task;
 import com.ktp.main.mapper.HomeworkMapper;
 import com.ktp.main.service.HomeworkService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -42,6 +44,9 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworkMapper, Homework> i
         this.modelMapper = modelMapper;
     }
 
+    @Autowired
+    TaskServiceImpl taskService;
+
     @Override
     public ResResult<HomeworkDto> submitHomework(HomeworkDto homeworkInfo){
         String id = StringUtil.getUUID();
@@ -49,6 +54,13 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworkMapper, Homework> i
         homeworkInfo.setId(id);
         homeworkInfo.setFilePath("http://localhost:" +port + "/file/" + filename);
         Homework homework = modelMapper.map(homeworkInfo, Homework.class);
+        UpdateWrapper<Task> uw = new UpdateWrapper<>();
+        Task task = taskService.getById(homeworkInfo.getTaskId());
+        uw
+                .eq("id", task.getId())
+                .set("submit_num", task.getSubmitNum() + 1)
+                .set("unSubmit_num", task.getUnSubmitNum() - 1);
+        taskService.update(uw);
         if (save(homework)){
             System.out.println("ok");
             return ResResult.ok(homeworkInfo);

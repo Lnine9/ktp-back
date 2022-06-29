@@ -1,6 +1,7 @@
 package com.ktp.main.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.ktp.main.dto.CourseDto;
 import com.ktp.main.entity.Course;
 import com.ktp.main.entity.UserCourse;

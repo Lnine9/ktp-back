@@ -1,12 +1,15 @@
 package com.ktp.main.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.ktp.main.dto.CourseDto;
 import com.ktp.main.entity.Course;
+import com.ktp.main.entity.User;
 import com.ktp.main.entity.UserCourse;
 import com.ktp.main.mapper.UserCourseMapper;
 import com.ktp.main.service.UserCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ktp.main.service.UserService;
 import com.ktp.main.util.ResResult;
 import org.apache.naming.factory.ResourceFactory;
 import org.modelmapper.ModelMapper;
@@ -31,6 +34,9 @@ import java.util.*;
 public class UserCourseServiceImpl extends ServiceImpl<UserCourseMapper, UserCourse> implements UserCourseService {
 
     private final ModelMapper modelMapper;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     public UserCourseServiceImpl(){
@@ -73,5 +79,57 @@ public class UserCourseServiceImpl extends ServiceImpl<UserCourseMapper, UserCou
         List<Course> courses = baseMapper.getCoursesByUserId(userId);
         List<CourseDto> res = modelMapper.map(courses, new TypeToken<List<CourseDto>>(){}.getType());
         return ResResult.ok(res);
+    }
+
+    @Override
+    public ResResult<Object> fieldCourse(String courseId, String userId) {
+        UpdateWrapper<UserCourse> uw = new UpdateWrapper<>();
+        uw
+                .eq("course_id", courseId)
+                .eq("user_id", userId)
+                .set("isfield", 1);
+        if(update(uw)){
+            return ResResult.ok();
+        } else {
+            return ResResult.fail("归档失败");
+        }
+    }
+
+    @Override
+    public ResResult<Object> unFieldCourse(String courseId, String userId) {
+        UpdateWrapper<UserCourse> uw = new UpdateWrapper<>();
+        uw
+                .eq("course_id", courseId)
+                .eq("user_id", userId)
+                .set("isfield", 0);
+        if(update(uw)){
+            return ResResult.ok();
+        } else {
+            return ResResult.fail("取消归档失败");
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public ResResult<Object> fieldAllCourse(String courseId, String userId) {
+        User user = userService.getById(userId);
+        if (user.getRole() != 1){
+            return ResResult.fail("用户不是该课程教师，无权限归档全部");
+        }
+        try {
+            UpdateWrapper<UserCourse> uw = new UpdateWrapper<>();
+            uw
+                    .eq("course_id", courseId)
+                    .set("isfield", 1);
+            if(update(uw)){
+                return ResResult.ok();
+            } else {
+                return ResResult.fail("归档全部失败");
+            }
+        } catch (RuntimeException e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return ResResult.fail("归档全部失败");
+        }
+
     }
 }

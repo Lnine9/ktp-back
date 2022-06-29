@@ -21,4 +21,10 @@ public interface UserCourseService extends IService<UserCourse> {
     ResResult<Object> quitCourse(String courseId, String userId);
 
     ResResult<List<CourseDto>> getCourses(String userId);
+
+    ResResult<Object> fieldCourse(String courseId, String userId);
+
+    ResResult<Object> unFieldCourse(String courseId, String userId);
+
+    ResResult<Object> fieldAllCourse(String courseId, String userId);
 }
