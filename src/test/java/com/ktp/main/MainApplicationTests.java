@@ -2,6 +2,7 @@ package com.ktp.main;
 
 import com.ktp.main.dto.CourseDto;
 import com.ktp.main.dto.UserDto;
+import com.ktp.main.mapper.UserCourseMapper;
 import com.ktp.main.service.CourseService;
 import com.ktp.main.service.LoginService;
 //import com.ktp.main.service.StringCacheService;
@@ -16,6 +17,9 @@ import java.util.UUID;
 
 @SpringBootTest
 class MainApplicationTests {
+
+    @Autowired
+    UserCourseMapper mapper;
 
     @Autowired
     LoginService loginService;
@@ -53,10 +57,12 @@ class MainApplicationTests {
 
     @Test
     void course(){
-        CourseDto courseInfo = new CourseDto().setId("JNCWXZ");
+//        CourseDto courseInfo = new CourseDto().setId("JNCWXZ");
 //        System.out.println(courseService.updateCourse(courseInfo.setTerm("2022").setCourseName("APEX")));
 //        System.out.println(courseService.dropCourse("JNCWXZ", "2"));
 //        System.out.println(userCourseService.quitCourse("JNCWXZ", "1"));
+        System.out.println(userCourseService.getCourses("1"));
+//        System.out.println(mapper.getCourseTeacher("ULDIWF"));
     }
 
 }

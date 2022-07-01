@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.ktp.main.dto.CourseDto;
 import com.ktp.main.entity.Course;
+import com.ktp.main.entity.Task;
 import com.ktp.main.entity.User;
 import com.ktp.main.entity.UserCourse;
 import com.ktp.main.mapper.UserCourseMapper;
+import com.ktp.main.service.TaskService;
 import com.ktp.main.service.UserCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ktp.main.service.UserService;
@@ -37,6 +39,9 @@ public class UserCourseServiceImpl extends ServiceImpl<UserCourseMapper, UserCou
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    TaskService taskService;
 
     @Autowired
     public UserCourseServiceImpl(){
@@ -78,6 +83,16 @@ public class UserCourseServiceImpl extends ServiceImpl<UserCourseMapper, UserCou
     public ResResult<List<CourseDto>> getCourses(String userId){
         List<Course> courses = baseMapper.getCoursesByUserId(userId);
         List<CourseDto> res = modelMapper.map(courses, new TypeToken<List<CourseDto>>(){}.getType());
+        for (CourseDto c : res) {
+            User teacher = baseMapper.getCourseTeacher(c.getId());
+            if (teacher != null){
+                c.setTeacherName(teacher.getUsername());
+            }
+            QueryWrapper<Task> qw = new QueryWrapper<>();
+            qw.eq("course_id", c.getId());
+            int count = taskService.count(qw);
+            c.setTaskCount(count);
+        }
         return ResResult.ok(res);
     }
 

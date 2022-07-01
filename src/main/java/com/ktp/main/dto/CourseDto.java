@@ -15,4 +15,8 @@ public class CourseDto {
     private String term;
 
     private String background;
+
+    private String teacherName;
+
+    private Integer taskCount;
 }
